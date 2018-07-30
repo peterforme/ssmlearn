@@ -66,6 +66,8 @@ public class PropertyController {
         model.addAttribute("c", c);
         model.addAttribute("page", page);
 
+
+        //fuck you
         return "admin/listProperty";
     }
 }
