@@ -54,7 +54,7 @@ public class PropertyController {
     @RequestMapping("admin_property_list")
     public String list(int cid, Model model,  Page page) {
         Category c = categoryService.get(cid);
-        
+
         PageHelper.offsetPage(page.getStart(),page.getCount());
         List<Property> ps = propertyService.list(cid);
 
@@ -66,8 +66,6 @@ public class PropertyController {
         model.addAttribute("c", c);
         model.addAttribute("page", page);
 
-
-        //fuck you
         return "admin/listProperty";
     }
 }
