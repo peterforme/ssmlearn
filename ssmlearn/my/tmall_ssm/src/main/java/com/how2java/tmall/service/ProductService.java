@@ -1,16 +1,21 @@
 package com.how2java.tmall.service;
-
+  
 import java.util.List;
-
+ 
+import com.how2java.tmall.pojo.Category;
 import com.how2java.tmall.pojo.Product;
-import com.how2java.tmall.pojo.Property;
-
+ 
 public interface ProductService {
-	void add(Product c);
+    void add(Product p);
     void delete(int id);
-    void update(Product c);
+    void update(Product p);
     Product get(int id);
     List list(int cid);
     void setFirstProductImage(Product p);
-    
+ 
+    void fill(List<Category> cs);
+ 
+    void fill(Category c);
+ 
+    void fillByRow(List<Category> cs);
 }
