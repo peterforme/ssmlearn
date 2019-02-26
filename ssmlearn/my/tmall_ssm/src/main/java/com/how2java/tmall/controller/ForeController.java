@@ -26,8 +26,10 @@ import org.springframework.web.util.HtmlUtils;
 
 
 
+
 import javax.servlet.http.HttpSession;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
  
@@ -176,5 +178,52 @@ public class ForeController {
         model.addAttribute("ps",ps);
         return "fore/searchResult";
     }
+    
+    @RequestMapping("forebuyone")
+    public String buyone(int pid, int num, HttpSession session) {
+        Product p = productService.get(pid);
+        int oiid = 0;
+ 
+        User user =(User)  session.getAttribute("user");
+        boolean found = false;
+        List<OrderItem> ois = orderItemService.listByUser(user.getId());
+        for (OrderItem oi : ois) {
+            if(oi.getProduct().getId().intValue()==p.getId().intValue()){
+                oi.setNumber(oi.getNumber()+num);
+                orderItemService.update(oi);
+                found = true;
+                oiid = oi.getId();
+                break;
+            }
+        }
+ 
+        if(!found){
+            OrderItem oi = new OrderItem();
+            oi.setUid(user.getId());
+            oi.setNumber(num);
+            oi.setPid(pid);
+            orderItemService.add(oi);
+            oiid = oi.getId();
+        }
+        return "redirect:forebuy?oiid="+oiid;
+    }
+ 
+    @RequestMapping("forebuy")
+    public String buy( Model model,String[] oiid,HttpSession session){
+        List<OrderItem> ois = new ArrayList<>();
+        float total = 0;
+ 
+        for (String strid : oiid) {
+            int id = Integer.parseInt(strid);
+            OrderItem oi= orderItemService.get(id);
+            total +=oi.getProduct().getPromotePrice()*oi.getNumber();
+            ois.add(oi);
+        }
+ 
+        session.setAttribute("ois", ois);
+        model.addAttribute("total", total);
+        return "fore/buy";
+    }
+    
     
 }
