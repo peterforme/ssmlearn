@@ -1,3 +1,3 @@
 <%
-    response.sendRedirect("../admin_backuser_list");
+    response.sendRedirect("../admin_login");
 %>

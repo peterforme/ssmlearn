@@ -4,7 +4,6 @@
   <resultMap id="BaseResultMap" type="com.how2java.tmall.pojo.BackUser">
     <id column="Id" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="salt" jdbcType="VARCHAR" property="salt" />
     <result column="password" jdbcType="VARCHAR" property="password" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -37,7 +36,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    Id, name, salt, password
+    Id, name, password
   </sql>
   <select id="selectByExample" parameterType="com.how2java.tmall.pojo.BackUserExample" resultMap="BaseResultMap">
     select
@@ -65,19 +64,14 @@
     where Id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" keyColumn="Id" keyProperty="id" parameterType="com.how2java.tmall.pojo.BackUser" useGeneratedKeys="true">
-    insert into backuser (name, salt, password
-      )
-    values (#{name,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}
-      )
+    insert into backuser (name, password)
+    values (#{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="Id" keyProperty="id" parameterType="com.how2java.tmall.pojo.BackUser" useGeneratedKeys="true">
     insert into backuser
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="name != null">
         name,
-      </if>
-      <if test="salt != null">
-        salt,
       </if>
       <if test="password != null">
         password,
@@ -86,9 +80,6 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="salt != null">
-        #{salt,jdbcType=VARCHAR},
       </if>
       <if test="password != null">
         #{password,jdbcType=VARCHAR},
@@ -101,9 +92,6 @@
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="salt != null">
-        salt = #{salt,jdbcType=VARCHAR},
-      </if>
       <if test="password != null">
         password = #{password,jdbcType=VARCHAR},
       </if>
@@ -113,7 +101,6 @@
   <update id="updateByPrimaryKey" parameterType="com.how2java.tmall.pojo.BackUser">
     update backuser
     set name = #{name,jdbcType=VARCHAR},
-      salt = #{salt,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR}
     where Id = #{id,jdbcType=INTEGER}
   </update>
