@@ -6,6 +6,14 @@
 <%@include file="../include/admin/adminNavigator.jsp"%>
  
 <script>
+    $(function(){
+ 
+        <c:if test="${!empty msg}">
+        $("div.panel-heading").html("${msg}");
+        alert("${msg}");
+        </c:if>
+ 
+    })
 </script>
  
 <title>后台用户管理</title>
@@ -22,6 +30,7 @@
             <tr class="success">
                 <th>ID</th>
                 <th>用户名称</th>
+                <th>删除</th>
             </tr>
             </thead>
             <tbody>
@@ -29,6 +38,8 @@
                 <tr>
                     <td>${u.id}</td>
                     <td>${u.name}</td>
+                    
+                    <td><a deleteLink="true" href="admin_backuser_delete?id=${u.id}"><span class="   glyphicon glyphicon-trash"></span></a></td>
                 </tr>
             </c:forEach>
             </tbody>
@@ -45,7 +56,7 @@
 </div>
 
 <div class="panel panel-warning addDiv">
-     <div class="panel-heading">新增分类</div>
+     <div class="panel-heading">新增用户</div>
      <div class="panel-body">
          <form method="post" id="addForm" action="admin_backuser_add" enctype="multipart/form-data">
              <table class="addTable">

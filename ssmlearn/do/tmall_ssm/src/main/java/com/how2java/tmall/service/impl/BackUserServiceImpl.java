@@ -42,4 +42,10 @@ public class BackUserServiceImpl implements BackUserService {
 		return null;
 	}
 
+	@Override
+	public void delete(int id) {
+		// TODO Auto-generated method stub
+		backUserMapper.deleteByPrimaryKey(id);
+	}
+
 }

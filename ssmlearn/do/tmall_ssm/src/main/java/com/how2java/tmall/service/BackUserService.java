@@ -11,4 +11,6 @@ public interface BackUserService {
 	public void add(BackUser backUser);
 
 	public BackUser get(String userName);
+
+	public void delete(int id);
 }

@@ -2,6 +2,8 @@ package com.how2java.tmall.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,6 +36,13 @@ public class BackUserController {
 
 	@RequestMapping("admin_backuser_add")
 	public String add(Model model, BackUser backUser) {
+		String name = backUser.getName();
+		BackUser qureyBackUser = backUserService.get(name);
+		if (qureyBackUser != null) {
+			model.addAttribute("msg", "账号已经存在");
+			return "forward:/admin_backuser_list";
+		}
+
 		String origin = backUser.getPassword();
 		String hashToDb = SaltUtil.MD5WithSalt(origin);
 		backUser.setPassword(hashToDb);
@@ -42,8 +51,14 @@ public class BackUserController {
 		return "redirect:/admin_backuser_list";
 	}
 
+	@RequestMapping("admin_backuser_delete")
+	public String delete(int id) {
+		backUserService.delete(id);
+		return "redirect:/admin_backuser_list";
+	}
+
 	@RequestMapping("admin_backuser_login")
-	public String login(Model model, BackUser backUser) {
+	public String login(Model model, BackUser backUser, HttpSession session) {
 		String userName = backUser.getName();
 		String origin = backUser.getPassword();
 
@@ -52,6 +67,7 @@ public class BackUserController {
 			String hashToDb = qureyBackUser.getPassword();
 			if (SaltUtil.varify(origin, hashToDb)) {
 				// 表示密码正确
+				session.setAttribute("user", qureyBackUser);
 				return "redirect:/admin_backuser_list";
 			}
 		}
