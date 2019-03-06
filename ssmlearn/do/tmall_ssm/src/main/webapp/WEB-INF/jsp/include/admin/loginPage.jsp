@@ -24,7 +24,47 @@
  
         var left = window.innerWidth/2+162;
         $("div.loginSmallDiv").css("left",left);
+        
+        //获取cookie应该写在前端还是后端？ 下面两段分别为前端获取和后端获取（个人觉得写在后端比较好如果需要序列化）
+        var cookiestr = getCookie("backuser");
+        if(cookiestr != ""){
+        	cookiestr = cookiestr.substring(1,cookiestr.length-1);
+        	var username = cookiestr.split(",")[0];
+        	var password = cookiestr.split(",")[1];
+        	$("#name").val(username);
+        	$("#password").val(password);
+        	$("#needRem").prop("checked",true);
+        }
+        
+        <c:if test="${!empty cookieVal}">
+        var cookiestr = "${cookieVal}";
+        alert(cookiestr);
+        var username = cookiestr.split(",")[0];
+    	var password = cookiestr.split(",")[1];
+    	$("#name").val(username);
+    	$("#password").val(password);
+    	$("#needRem").prop("checked",true);
+        </c:if>
+        
+        
     })
+    
+    function getCookie(cookiename){
+    	var name = cookiename + "=";
+    	var str = document.cookie.split(';');
+    	var le = str.length;
+    	for(var i =0; i<str.length; i++){
+    		var ind = str[i];
+    		while(ind.charAt(0)==' ')
+    			ind = ind.substring(1);
+    		var saf = ind.length;
+    		console.log(ind);
+    		if(ind.indexOf(name) != -1)
+    			return ind.substring(name.length,ind.length);
+    	}
+    	return "";
+    };
+    
 </script>
  
 <div id="loginDiv" style="position: relative">
@@ -58,6 +98,9 @@
                 </span>
                 <input id="password" name="password" type="password" placeholder="密码" type="text">
             </div>
+            
+            <input id="needRem" name="needRem" type="checkbox" >记住密码 </input>
+            
             <span class="text-danger">不要输入真实的天猫账号密码</span><br><br>
  
             <div>

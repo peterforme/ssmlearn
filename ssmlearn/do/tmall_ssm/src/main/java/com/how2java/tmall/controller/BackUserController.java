@@ -2,6 +2,9 @@ package com.how2java.tmall.controller;
 
 import java.util.List;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,16 +61,30 @@ public class BackUserController {
 	}
 
 	@RequestMapping("admin_backuser_login")
-	public String login(Model model, BackUser backUser, HttpSession session) {
+	public String login(Model model, BackUser backUser, HttpSession session,String needRem,
+			HttpServletResponse response) {
 		String userName = backUser.getName();
 		String origin = backUser.getPassword();
+		
+		//needRem表示是否记住密码,值会为on或者null
+		//安全起见的话，应该以序列化的方式来保存到cookie中
+		if(needRem != null){
+			Cookie cookie = new Cookie("backuser", userName+","+origin);
+			cookie.setMaxAge(30 * 24 * 60 * 60);
+			response.addCookie(cookie);
+		}else{
+			Cookie cookie = new Cookie("backuser", null);
+			cookie.setMaxAge(0);
+			//进行覆盖
+			response.addCookie(cookie); 
+		}
 
 		BackUser qureyBackUser = backUserService.get(userName);
 		if (qureyBackUser != null) {
 			String hashToDb = qureyBackUser.getPassword();
 			if (SaltUtil.varify(origin, hashToDb)) {
 				// 表示密码正确
-				session.setAttribute("user", qureyBackUser);
+				session.setAttribute("backuser", qureyBackUser);
 				return "redirect:/admin_backuser_list";
 			}
 		}

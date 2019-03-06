@@ -1,5 +1,8 @@
 package com.how2java.tmall.controller;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,7 +12,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class PageController {
 
 	@RequestMapping("admin_login")
-	public String login(Model model) {
+	public String login(Model model,HttpServletRequest request) {
+		Cookie[] cookies = request.getCookies();
+		//遍历所有的cookie,然后根据cookie的key值来获取value值
+		if (cookies!=null) {
+		            for (Cookie cookie : cookies) {
+		                if (cookie.getName().equals("backuser")) {
+		                  String cookieVal = cookie.getValue();
+		                  model.addAttribute("cookieVal", cookieVal);
+		                }
+		            }
+		        }
 		return "admin/login";
 	}
 

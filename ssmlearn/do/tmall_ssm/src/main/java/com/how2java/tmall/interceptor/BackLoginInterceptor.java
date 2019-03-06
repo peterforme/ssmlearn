@@ -33,7 +33,7 @@ public class BackLoginInterceptor extends HandlerInterceptorAdapter {
 		if (uri.startsWith("/admin")) {
 			String method = StringUtils.substringAfterLast(uri, "/admin");
 			if (!Arrays.asList(noNeedAuthPage).contains(method)) {
-				BackUser user = (BackUser) session.getAttribute("user");
+				BackUser user = (BackUser) session.getAttribute("backuser");
 				if (null == user) {
 					response.sendRedirect("admin_login");
 					return false;
