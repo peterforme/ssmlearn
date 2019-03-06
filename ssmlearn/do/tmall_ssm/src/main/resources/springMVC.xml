@@ -35,7 +35,7 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/admin*"/>
-            <bean class="com.how2java.tmall.interceptor.LoginInterceptor"/>
+            <bean class="com.how2java.tmall.interceptor.BackLoginInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
     

@@ -14,7 +14,7 @@ public class SaltUtil {
 
 	public static void main(String[] args) throws Exception {
 		// 注册
-		String input = "123456";
+		String input = "ccc";
 		System.out.println("MD5加密" + "\n" + "明文：" + input + "\n");
 		String hashToDb = MD5WithSalt(input);
 		System.out.println("带盐密文(存到数据库)：" + hashToDb);
