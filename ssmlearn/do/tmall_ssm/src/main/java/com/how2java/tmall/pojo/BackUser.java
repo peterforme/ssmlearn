@@ -1,33 +1,35 @@
 package com.how2java.tmall.pojo;
 
-public class BackUser {
-    private Integer id;
+import java.io.Serializable;
 
-    private String name;
+public class BackUser implements Serializable {
+	private Integer id;
 
-    private String password;
+	private String name;
 
-    public Integer getId() {
-        return id;
-    }
+	private String password;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public void setName(String name) {
+		this.name = name == null ? null : name.trim();
+	}
 
-    public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
-    }
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password == null ? null : password.trim();
+	}
 }

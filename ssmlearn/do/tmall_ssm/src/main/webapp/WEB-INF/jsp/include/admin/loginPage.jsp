@@ -38,7 +38,6 @@
         
         <c:if test="${!empty cookieVal}">
         var cookiestr = "${cookieVal}";
-        alert(cookiestr);
         var username = cookiestr.split(",")[0];
     	var password = cookiestr.split(",")[1];
     	$("#name").val(username);
