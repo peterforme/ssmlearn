@@ -36,8 +36,8 @@ public class CategoryController {
 		int total = (int) new PageInfo<>(categoryList).getTotal();
 		page.setTotal(total);
 		model.addAttribute("page", page);
-		model.addAttribute("cs", categoryList);
-		return "admin/listCategory";
+		model.addAttribute("ps", categoryList);
+		return "admin/listProperty";
 	}
 
 	@RequestMapping("admin_category_add")
