@@ -1,3 +1,3 @@
 <%
-    response.sendRedirect("../admin_login");
+    response.sendRedirect("../forehome");
 %>
