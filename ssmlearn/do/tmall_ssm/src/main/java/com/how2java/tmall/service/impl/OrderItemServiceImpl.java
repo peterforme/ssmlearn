@@ -81,4 +81,18 @@ public class OrderItemServiceImpl implements OrderItemService{
 		o.setOrderItems(orderItemList);
 	}
 
+	@Override
+	public int getSaleCount(int pid) {
+		// TODO Auto-generated method stub
+		OrderItemExample example = new OrderItemExample();
+		example.createCriteria().andPidEqualTo(pid);
+		List<OrderItem> orderItemList = mapper.selectByExample(example);
+		int count = 0;
+		for (OrderItem orderItem : orderItemList) {
+			count += orderItem.getNumber();
+		}
+		
+		return count;
+	}
+
 }

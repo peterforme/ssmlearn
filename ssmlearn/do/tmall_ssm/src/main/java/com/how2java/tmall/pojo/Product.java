@@ -20,7 +20,7 @@ public class Product {
  
     private Date createDate;
  
-    /*·ÇÊı¾İ¿â×Ö¶Î*/
+    /*éæ•°æ®åº“å­—æ®µ*/
     private Category  category;
  
     private ProductImage firstProductImage;
