@@ -26,4 +26,18 @@ public class PageController {
 		return "admin/login";
 	}
 
+	@RequestMapping("registerPage")
+	public String registerPage(Model model){
+		return "fore/register";
+	}
+	
+	@RequestMapping("loginPage")
+    public String loginPage(Model model){
+    	return "fore/login";
+    }	
+	
+	@RequestMapping("registerSuccessPage")
+    public String registerSuccessPage() {
+        return "fore/registerSuccess";
+    }
 }
