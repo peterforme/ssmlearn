@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.HtmlUtils;
 
 import java.util.List;
@@ -85,6 +86,29 @@ public class ForeController {
         return "redirect:forehome";
     }
     
+    @RequestMapping("forecheckLogin")
+    @ResponseBody
+    public String forecheckLogin(Model model,HttpSession session){
+    	if(session.getAttribute("user") != null){
+    		return "success";
+    	}
+    	else{
+    		return "fail";
+    	}
+    }
+    
+    @RequestMapping("foreloginAjax")
+    @ResponseBody
+    public String foreloginAjax(Model model,String name,String password,HttpSession session){
+    	User temp = userService.get(HtmlUtils.htmlEscape(name), password);
+    	if(temp == null){
+    		return "fail";
+    	}
+    	session.setAttribute("user", temp);
+    	return "success";
+    }
+    
+    
     @RequestMapping("foreproduct")
     public String foreproduct(Model model,int pid){
     	
@@ -105,5 +129,8 @@ public class ForeController {
     	model.addAttribute("reviews", reviews);
     	return "fore/product";
     }
+    
+    
+    
     
 }
