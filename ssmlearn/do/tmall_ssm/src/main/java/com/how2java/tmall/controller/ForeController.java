@@ -10,6 +10,12 @@ import com.how2java.tmall.pojo.User;
 import com.how2java.tmall.pojo.UserExample;
 import com.how2java.tmall.service.*;
 
+import comparator.ProductAllComparator;
+import comparator.ProductDateComparator;
+import comparator.ProductPriceComparator;
+import comparator.ProductReviewComparator;
+import comparator.ProductSaleCountComparator;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.HtmlUtils;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -130,7 +137,37 @@ public class ForeController {
     	return "fore/product";
     }
     
-    
-    
+    @RequestMapping("forecategory")
+    public String forecategory(Model model, int cid,String sort){
+    	Category c = categoryService.get(cid);
+        productService.fill(c);
+        productService.setSaleAndReviewNumber(c.getProducts());
+ 
+        if(null!=sort){
+            switch(sort){
+                case "review":
+                    Collections.sort(c.getProducts(),new ProductReviewComparator());
+                    break;
+                case "date" :
+                    Collections.sort(c.getProducts(),new ProductDateComparator());
+                    break;
+ 
+                case "saleCount" :
+                    Collections.sort(c.getProducts(),new ProductSaleCountComparator());
+                    break;
+ 
+                case "price":
+                    Collections.sort(c.getProducts(),new ProductPriceComparator());
+                    break;
+ 
+                case "all":
+                    Collections.sort(c.getProducts(),new ProductAllComparator());
+                    break;
+            }
+        }
+ 
+        model.addAttribute("c", c);
+        return "fore/category";
+    }
     
 }
