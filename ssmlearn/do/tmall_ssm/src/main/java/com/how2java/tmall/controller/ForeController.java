@@ -1,6 +1,7 @@
 package com.how2java.tmall.controller;
  
 import com.how2java.tmall.pojo.Category;
+import com.how2java.tmall.pojo.OrderItem;
 import com.how2java.tmall.pojo.Product;
 import com.how2java.tmall.pojo.ProductImage;
 import com.how2java.tmall.pojo.Property;
@@ -177,5 +178,31 @@ public class ForeController {
     	model.addAttribute("ps", productList);
     	return "fore/searchResult";
     }
+    
+    @RequestMapping("forebuyone")
+    public String forebuyone(Model model, HttpSession session,int num,int pid){
+    	User user = (User) session.getAttribute("user");
+    	int uid = user.getId();
+    	
+    	List<OrderItem> orderItemList = orderItemService.getItemListNotInOrder(uid, pid);
+    	int oiid = -1;
+    	
+    	if(orderItemList.size() > 0){
+    		OrderItem orderItem = orderItemList.get(0);
+    		orderItem.setNumber(orderItem.getNumber() + num);
+    		orderItemService.update(orderItem);
+    		oiid = orderItem.getId();
+    	}else{
+    		OrderItem orderItem = new OrderItem();
+    		orderItem.setNumber(num);
+    		orderItem.setPid(pid);
+    		orderItem.setUid(uid);
+    		//发现这个oiid不对 
+    		oiid = orderItemService.add(orderItem);
+    	}
+    	
+    	return "redirect:forebuy?oiid="+oiid;
+    }
+    
     
 }

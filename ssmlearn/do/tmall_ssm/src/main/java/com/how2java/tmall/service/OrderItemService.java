@@ -7,7 +7,7 @@ import com.how2java.tmall.pojo.OrderItem;
  
 public interface OrderItemService {
       
-    void add(OrderItem c);
+    int add(OrderItem c);
  
     void delete(int id);
     void update(OrderItem c);
@@ -19,4 +19,6 @@ public interface OrderItemService {
     void fill(Order o);
  
     int getSaleCount(int  pid);
+
+	List<OrderItem> getItemListNotInOrder(int uid, int pid);
 }

@@ -22,9 +22,9 @@ public class OrderItemServiceImpl implements OrderItemService{
 	ProductService productService;
 	
 	@Override
-	public void add(OrderItem c) {
+	public int add(OrderItem c) {
 		// TODO Auto-generated method stub
-		mapper.insert(c);
+		return mapper.insert(c);
 	}
 
 	@Override
@@ -45,6 +45,16 @@ public class OrderItemServiceImpl implements OrderItemService{
 		return mapper.selectByPrimaryKey(id);
 	}
 
+	@Override
+	public List<OrderItem> getItemListNotInOrder(int uid,int pid) {
+		// TODO Auto-generated method stub
+		OrderItemExample example = new OrderItemExample();
+		example.setOrderByClause("id desc");
+		example.createCriteria().andUidEqualTo(uid).andPidEqualTo(pid).andOidIsNull();
+		List orderItemList = mapper.selectByExample(example);
+		return orderItemList;
+	}
+	
 	@Override
 	public List list() {
 		// TODO Auto-generated method stub

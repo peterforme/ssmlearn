@@ -73,7 +73,10 @@ $(function(){
                 function(result){
                     if("success"==result){
                         var num = $(".productNumberSetting").val();
-                        location.href= $(".buyLink").attr("href")+"&num="+num;
+                        
+                        var link = "forebuyone?pid=${p.id}&num="+num;
+                        //location.href= $(".buyLink").attr("href")+"&num="+num;
+                        location.href= link;
                     }
                     else{
                         $("#loginModal").modal('show');                    
