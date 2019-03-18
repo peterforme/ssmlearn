@@ -197,8 +197,9 @@ public class ForeController {
     		orderItem.setNumber(num);
     		orderItem.setPid(pid);
     		orderItem.setUid(uid);
-    		//发现这个oiid不对 
-    		oiid = orderItemService.add(orderItem);
+    		orderItemService.add(orderItem);
+    		//insert后会设置主键到该bean中
+    		oiid = orderItem.getId();
     	}
     	
     	return "redirect:forebuy?oiid="+oiid;

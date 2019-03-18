@@ -22,9 +22,9 @@ public class OrderItemServiceImpl implements OrderItemService{
 	ProductService productService;
 	
 	@Override
-	public int add(OrderItem c) {
+	public void add(OrderItem c) {
 		// TODO Auto-generated method stub
-		return mapper.insert(c);
+		mapper.insert(c);
 	}
 
 	@Override
