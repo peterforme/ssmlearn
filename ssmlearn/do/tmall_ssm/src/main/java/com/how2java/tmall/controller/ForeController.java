@@ -170,4 +170,12 @@ public class ForeController {
         return "fore/category";
     }
     
+    
+    @RequestMapping("foresearch")
+    public String foresearch(Model model, String keyword){
+    	List<Product> productList = productService.search(keyword);
+    	model.addAttribute("ps", productList);
+    	return "fore/searchResult";
+    }
+    
 }

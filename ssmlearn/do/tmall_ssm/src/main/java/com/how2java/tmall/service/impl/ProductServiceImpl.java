@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
  
 
 
+
 import java.util.ArrayList;
 import java.util.List;
 @Service
@@ -75,6 +76,9 @@ public class ProductServiceImpl implements ProductService {
         return result;
     }
  
+    
+    
+    
     @Override
     public void setFirstProductImage(Product p) {
         List<ProductImage> pis = productImageService.list(p.getId(), ProductImageService.type_single);
@@ -134,5 +138,18 @@ public class ProductServiceImpl implements ProductService {
             setSaleAndReviewNumber(p);
         }
     }
+
+	@Override
+	public List search(String keyword) {
+		// TODO Auto-generated method stub
+		ProductExample example = new ProductExample();
+        example.createCriteria().andNameLike("%"+keyword+"%");
+        example.setOrderByClause("id desc");
+        List result = productMapper.selectByExample(example);
+        setCategory(result);
+        setFirstProductImage(result);
+        setSaleAndReviewNumber(result);
+        return result;
+	}
  
 }
