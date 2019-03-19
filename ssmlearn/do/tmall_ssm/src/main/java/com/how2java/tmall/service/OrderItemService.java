@@ -21,4 +21,6 @@ public interface OrderItemService {
     int getSaleCount(int  pid);
 
 	List<OrderItem> getItemListNotInOrder(int uid, int pid);
+	
+	List<OrderItem> listByUser(int uid);
 }

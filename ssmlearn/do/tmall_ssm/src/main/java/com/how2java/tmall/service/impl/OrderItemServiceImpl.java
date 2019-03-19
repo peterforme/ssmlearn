@@ -104,5 +104,25 @@ public class OrderItemServiceImpl implements OrderItemService{
 		
 		return count;
 	}
+	
+	@Override
+    public List<OrderItem> listByUser(int uid) {
+        OrderItemExample example =new OrderItemExample();
+        example.createCriteria().andUidEqualTo(uid).andOidIsNull();
+        List<OrderItem> result =mapper.selectByExample(example);
+        setProduct(result);
+        return result;
+    }
 
+	public void setProduct(List<OrderItem> ois){
+        for (OrderItem oi: ois) {
+            setProduct(oi);
+        }
+    }
+ 
+    private void setProduct(OrderItem oi) {
+        Product p = productService.get(oi.getPid());
+        oi.setProduct(p);
+    }
+	
 }
