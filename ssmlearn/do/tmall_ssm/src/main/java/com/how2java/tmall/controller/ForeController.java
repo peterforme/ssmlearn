@@ -317,4 +317,14 @@ public class ForeController {
     	return "fore/payed";
     }
     
+    @RequestMapping("forebought")
+    public String forebought(Model model,HttpSession session){
+    	User user = (User) session.getAttribute("user");
+    	int uid = user.getId();
+    	
+    	List<Order> orderList = orderService.listByUser(uid,OrderService.delete);
+    	model.addAttribute("os", orderList);
+    	return "fore/bought";
+    }
+    
 }

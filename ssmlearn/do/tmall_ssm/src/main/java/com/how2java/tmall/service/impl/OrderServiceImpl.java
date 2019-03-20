@@ -64,6 +64,18 @@ public class OrderServiceImpl implements OrderService {
         orderItemService.fill(result);
         return result;
     }
+    
+    @Override
+    public List<Order> listByUser(int uid, String excludedStatus){
+        OrderExample example =new OrderExample();
+        example.setOrderByClause("id desc");
+        example.createCriteria().andUidEqualTo(uid).andStatusNotEqualTo(excludedStatus);
+        List<Order> result =orderMapper.selectByExample(example);
+        setUser(result);
+        orderItemService.fill(result);
+        return result;
+    }
+    
     public void setUser(List<Order> os){
         for (Order o : os)
             setUser(o);
