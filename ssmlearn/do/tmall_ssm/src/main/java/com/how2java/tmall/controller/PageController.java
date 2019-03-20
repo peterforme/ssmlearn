@@ -40,4 +40,25 @@ public class PageController {
     public String registerSuccessPage() {
         return "fore/registerSuccess";
     }
+	
+	@RequestMapping("forealipay")
+    public String alipay(){
+        return "fore/alipay";
+    }
+	
+	@RequestMapping("testa")
+    public String testa(){
+        return "fore/testa";
+    }
+	
+	@RequestMapping("testb")
+    public String testb(){
+        return "forward:/testc";
+    }
+	
+	@RequestMapping("testc")
+    public String testc(){
+        return "fore/testc";
+    }
+	
 }

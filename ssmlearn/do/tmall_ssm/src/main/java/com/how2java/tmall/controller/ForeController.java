@@ -18,6 +18,7 @@ import comparator.ProductPriceComparator;
 import comparator.ProductReviewComparator;
 import comparator.ProductSaleCountComparator;
 
+import org.apache.commons.lang.math.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,8 +30,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.HtmlUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -293,11 +296,25 @@ public class ForeController {
     public String forecreateOrder(Model model,HttpSession session,Order order){
     	User user = (User) session.getAttribute("user");
     	int uid = user.getId();
+    	List<OrderItem> ois = (List<OrderItem>) session.getAttribute("ois");
     	
-    	
-    	
-    	model.addAttribute("ois","");
-    	return "fore/cart";
+    	String orderCode = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + RandomUtils.nextInt(10000);
+        order.setOrderCode(orderCode);
+        order.setCreateDate(new Date());
+    	order.setUid(uid);
+    	order.setStatus(orderService.waitPay);
+    	float total =orderService.add(order,ois);
+        return "redirect:forealipay?oid="+order.getId() +"&total="+total;
+    }
+    
+    @RequestMapping("forepayed")
+    public String forepayed(Model model,int oid,float total){
+    	Order order = orderService.get(oid);
+    	order.setStatus(OrderService.waitDelivery);
+        order.setPayDate(new Date());
+        orderService.update(order);
+    	model.addAttribute("o", order);
+    	return "fore/payed";
     }
     
 }
