@@ -53,7 +53,10 @@ public class OrderServiceImpl implements OrderService {
  
     @Override
     public Order get(int id) {
-        return orderMapper.selectByPrimaryKey(id);
+    	Order result = orderMapper.selectByPrimaryKey(id);
+        setUser(result);
+        orderItemService.fill(result);
+        return result;
     }
  
     public List<Order> list(){

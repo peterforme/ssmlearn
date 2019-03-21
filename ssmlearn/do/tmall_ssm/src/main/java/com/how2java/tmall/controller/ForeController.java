@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.HtmlUtils;
 
@@ -325,6 +326,64 @@ public class ForeController {
     	List<Order> orderList = orderService.listByUser(uid,OrderService.delete);
     	model.addAttribute("os", orderList);
     	return "fore/bought";
+    }
+    
+    @RequestMapping("foreconfirmPay")
+    public String foreconfirmPay(Model model,int oid){
+    	Order order = orderService.get(oid);
+    	model.addAttribute("o", order);
+    	return "fore/confirmPay";
+    }
+    
+    @RequestMapping("foreorderConfirmed")
+    public String foreorderConfirmed(Model model,int oid){
+    	Order order = orderService.get(oid);
+    	order.setStatus(orderService.waitReview);
+    	order.setConfirmDate(new Date());
+    	orderService.update(order);
+    	return "fore/orderConfirmed";
+    }
+    
+    @RequestMapping("foredeleteOrder")
+    @ResponseBody
+    public String foredeleteOrder(Model model,int oid){
+    	Order order = orderService.get(oid);
+    	order.setStatus(orderService.delete);
+    	orderService.update(order);
+    	return "success";
+    }
+    
+    @RequestMapping("forereview")
+    public String forereview(Model model,int oid){
+    	Order order = orderService.get(oid);
+    	List<OrderItem> orderItemList = order.getOrderItems();
+    	OrderItem orderItem = orderItemList.get(0);
+    	Product product = orderItem.getProduct();
+		List<Review> reviewList = reviewSevice.list(product.getId());
+		model.addAttribute("p", product);
+	    model.addAttribute("o", order);
+	    model.addAttribute("reviews", reviewList);
+    	return "fore/review";
+    }
+    
+    @RequestMapping("foredoreview")
+    public String doreview( Model model,HttpSession session,@RequestParam("oid") int oid,@RequestParam("pid") int pid,String content) {
+    	Order o = orderService.get(oid);
+        o.setStatus(OrderService.finish);
+        orderService.update(o);
+     
+        Product p = productService.get(pid);
+        content = HtmlUtils.htmlEscape(content);
+     
+        User user =(User)  session.getAttribute("user");
+        Review review = new Review();
+        review.setContent(content);
+        review.setPid(pid);
+        review.setCreateDate(new Date());
+        review.setUid(user.getId());
+        reviewSevice.add(review);
+     
+        return "redirect:forereview?oid="+oid+"&showonly=true";
     }
     
 }
