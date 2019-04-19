@@ -11,4 +11,6 @@ import com.how2java.tmall.pojo.Property;
  
 public interface PropertyDAO extends JpaRepository<Property,Integer>{
     Page<Property> findByCategory(Category category, Pageable pageable);
+    List<Property> findByCategory(Category category);
+ 
 }

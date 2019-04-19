@@ -1,7 +1,11 @@
+<!-- æ¨¡ä»¿å¤©çŒ«æ•´ç«™springboot æ•™ç¨‹ ä¸ºhow2j.cn ç‰ˆæƒæ‰€æœ‰-->
+<!-- æœ¬æ•™ç¨‹ä»…ç”¨äºå­¦ä¹ ä½¿ç”¨ï¼Œåˆ‡å‹¿ç”¨äºéæ³•ç”¨é€”ï¼Œç”±æ­¤å¼•èµ·ä¸€åˆ‡åæœä¸æœ¬ç«™æ— å…³-->
+<!-- ä¾›è´­ä¹°è€…å­¦ä¹ ï¼Œè¯·å‹¿ç§è‡ªä¼ æ’­ï¼Œå¦åˆ™è‡ªè¡Œæ‰¿æ‹…ç›¸å…³æ³•å¾‹è´£ä»»-->
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
- 
-<head th:include="include/admin/adminHeader::html('·ÖÀà¹ÜÀí')" ></head>
+
+<head th:include="include/admin/adminHeader::html('åˆ†ç±»ç®¡ç†')" ></head>
 <body>
 <div th:replace="include/admin/adminNavigator::html" ></div>
 <script>
@@ -13,12 +17,12 @@
             pagination:{},
             file: null
         };
- 
+
         //ViewModel
         var vue = new Vue({
             el: '#workingArea',
             data: data4Vue,
-            mounted:function(){ //mounted¡¡±íÊ¾Õâ¸ö Vue ¶ÔÏó¼ÓÔØ³É¹¦ÁË
+            mounted:function(){ //mountedã€€è¡¨ç¤ºè¿™ä¸ª Vue å¯¹è±¡åŠ è½½æˆåŠŸäº†
                 this.list(0);
             },
             methods: {
@@ -26,17 +30,17 @@
                     var url =  this.uri+ "?start="+start;
                     axios.get(url).then(function(response) {
                         vue.pagination = response.data;
-                        vue.beans = response.data.content   ;
+                        vue.beans = response.data.content	;
                     });
                 },
                 add: function () {
-                    if(!checkEmpty(this.bean.name, "·ÖÀàÃû³Æ"))
+                    if(!checkEmpty(this.bean.name, "åˆ†ç±»åç§°"))
                         return;
-                    if(!checkEmpty(this.file, "·ÖÀàÍ¼Æ¬"))
+                    if(!checkEmpty(this.file, "åˆ†ç±»å›¾ç‰‡"))
                         return;
                     var url = this.uri;
- 
-                    //axios.js ÉÏ´«ÎÄ¼şÒªÓÃ formData ÕâÖÖ·½Ê½
+
+                    //axios.js ä¸Šä¼ æ–‡ä»¶è¦ç”¨ formData è¿™ç§æ–¹å¼
                     var formData = new FormData();
                     formData.append("image", this.file);
                     formData.append("name", this.bean.name);
@@ -64,7 +68,7 @@
                     this.file = event.target.files[0];
                 },
                 jump: function(page){
-                    jump(page,vue); //¶¨ÒåÔÚadminHeader.html ÖĞ
+                    jump(page,vue); //å®šä¹‰åœ¨adminHeader.html ä¸­
                 },
                 jumpByNumber: function(start){
                     jumpByNumber(start,vue);
@@ -72,10 +76,10 @@
             }
         });
     });
- 
+
 </script>
 <div id="workingArea" >
-    <h1 class="label label-info" >·ÖÀà¹ÜÀí</h1>
+    <h1 class="label label-info" >åˆ†ç±»ç®¡ç†</h1>
     <br>
     <br>
     <div class="listDataTableDiv">
@@ -83,12 +87,12 @@
             <thead>
             <tr class="success">
                 <th>ID</th>
-                <th>Í¼Æ¬</th>
-                <th>·ÖÀàÃû³Æ</th>
-                <th>ÊôĞÔ¹ÜÀí</th>
-                <th>²úÆ·¹ÜÀí</th>
-                <th>±à¼­</th>
-                <th>É¾³ı</th>
+                <th>å›¾ç‰‡</th>
+                <th>åˆ†ç±»åç§°</th>
+                <th>å±æ€§ç®¡ç†</th>
+                <th>äº§å“ç®¡ç†</th>
+                <th>ç¼–è¾‘</th>
+                <th>åˆ é™¤</th>
             </tr>
             </thead>
             <tbody>
@@ -118,22 +122,22 @@
     </div>
     <div th:replace="include/admin/adminPage::html" ></div>
     <div class="panel panel-warning addDiv">
-        <div class="panel-heading">ĞÂÔö·ÖÀà</div>
+        <div class="panel-heading">æ–°å¢åˆ†ç±»</div>
         <div class="panel-body">
             <table class="addTable">
                 <tr>
-                    <td>·ÖÀàÃû³Æ</td>
+                    <td>åˆ†ç±»åç§°</td>
                     <td><input  @keyup.enter="add" v-model.trim="bean.name" type="text" class="form-control"></td>
                 </tr>
                 <tr>
-                    <td>·ÖÀàÍ¼Æ¬</td>
+                    <td>åˆ†ç±»å›¾ç‰‡</td>
                     <td>
                         <input id="categoryPic" accept="image/*" type="file" name="image" @change="getFile($event)" />
                     </td>
                 </tr>
                 <tr class="submitTR">
                     <td colspan="2" align="center">
-                        <a href="#nowhere"  @click="add" class="btn btn-success">Ìá½»</a>
+                        <a href="#nowhere"  @click="add" class="btn btn-success">æäº¤</a>
                     </td>
                 </tr>
             </table>

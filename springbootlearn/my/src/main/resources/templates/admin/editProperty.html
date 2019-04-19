@@ -1,7 +1,11 @@
+<!-- 模仿天猫整站springboot 教程 为how2j.cn 版权所有-->
+<!-- 本教程仅用于学习使用，切勿用于非法用途，由此引起一切后果与本站无关-->
+<!-- 供购买者学习，请勿私自传播，否则自行承担相关法律责任-->
+
 1<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
- 
-<head th:include="include/admin/adminHeader::html('�༭����')" ></head>
+
+<head th:include="include/admin/adminHeader::html('编辑属性')" ></head>
 <body>
 <div th:replace="include/admin/adminNavigator::html" ></div>
 <script>
@@ -12,12 +16,12 @@
             bean: '',
             category:''
         };
- 
+
         //ViewModel
         var vue = new Vue({
             el: '#workingArea',
             data: data4Vue,
-            mounted:function(){ //mounted����ʾ��� Vue ������سɹ���
+            mounted:function(){ //mounted　表示这个 Vue 对象加载成功了
                 this.get();
             },
             methods: {
@@ -30,7 +34,7 @@
                     })
                 },
                 update:function () {
-                    if(!checkEmpty(this.bean.name, "��������"))
+                    if(!checkEmpty(this.bean.name, "属性名称"))
                         return;
                     var url = this.uri;
                     axios.put(url,vue.bean).then(function(response){
@@ -41,34 +45,41 @@
         });
     });
 </script>
- 
+
 <div id="workingArea">
- 
+
     <ol class="breadcrumb">
-        <li><a href="admin_category_list">���з���</a></li>
+        <li><a href="admin_category_list">所有分类</a></li>
         <li><a :href="'admin_property_list?cid='+category.id">{{category.name}}</a></li>
-        <li class="active">���Թ���</li>
+        <li class="active">属性管理</li>
     </ol>
- 
+
+
+
     <div class="panel panel-warning editDiv">
-        <div class="panel-heading">�༭����</div>
+        <div class="panel-heading">编辑属性</div>
         <div class="panel-body">
             <table class="editTable">
                 <tr>
-                    <td>��������</td>
+                    <td>属性名称</td>
                     <td><input  @keyup.enter="update"  v-model.trim="bean.name" type="text" class="form-control"></td>
                 </tr>
                 <tr class="submitTR">
                     <td colspan="2" align="center">
                         <input type="hidden" name="id"   v-model.trim="bean.id" >
-                        <a href="#nowhere" class="btn btn-success" @click="update">�� ��</a>
+                        <a href="#nowhere" class="btn btn-success" @click="update">提 交</a>
                     </td>
                 </tr>
             </table>
         </div>
     </div>
 </div>
- 
+
 <div th:replace="include/admin/adminFooter::html" ></div>
 </body>
 </html>
+
+
+
+
+

@@ -1,7 +1,11 @@
+<!-- æ¨¡ä»¿å¤©çŒ«æ•´ç«™springboot æ•™ç¨‹ ä¸ºhow2j.cn ç‰ˆæƒæ‰€æœ‰-->
+<!-- æœ¬æ•™ç¨‹ä»…ç”¨äºå­¦ä¹ ä½¿ç”¨ï¼Œåˆ‡å‹¿ç”¨äºéæ³•ç”¨é€”ï¼Œç”±æ­¤å¼•èµ·ä¸€åˆ‡åæœä¸æœ¬ç«™æ— å…³-->
+<!-- ä¾›è´­ä¹°è€…å­¦ä¹ ï¼Œè¯·å‹¿ç§è‡ªä¼ æ’­ï¼Œå¦åˆ™è‡ªè¡Œæ‰¿æ‹…ç›¸å…³æ³•å¾‹è´£ä»»-->
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
- 
-<head th:include="include/admin/adminHeader::html('ÊôĞÔ¹ÜÀí')" ></head>
+
+<head th:include="include/admin/adminHeader::html('å±æ€§ç®¡ç†')" ></head>
 <body>
 <div th:replace="include/admin/adminNavigator::html" ></div>
 <script>
@@ -14,12 +18,12 @@
             pagination:{},
             category:''
         };
- 
+
         //ViewModel
         var vue = new Vue({
             el: '#workingArea',
             data: data4Vue,
-            mounted:function(){ //mounted¡¡±íÊ¾Õâ¸ö Vue ¶ÔÏó¼ÓÔØ³É¹¦ÁË
+            mounted:function(){ //mountedã€€è¡¨ç¤ºè¿™ä¸ª Vue å¯¹è±¡åŠ è½½æˆåŠŸäº†
                 this.getCategory(cid);
                 this.list(0);
             },
@@ -34,11 +38,11 @@
                     var url =  "categories/"+cid+"/"+this.uri+"?start="+start;
                     axios.get(url).then(function(response) {
                         vue.pagination = response.data;
-                        vue.beans = response.data.content   ;
+                        vue.beans = response.data.content	;
                     });
                 },
                 add: function () {
-                    if(!checkEmpty(this.bean.name, "ÊôĞÔÃû³Æ"))
+                    if(!checkEmpty(this.bean.name, "å±æ€§åç§°"))
                         return;
                     var url = this.uri;
                     this.bean.category.id = cid;
@@ -59,33 +63,33 @@
                     });
                 },
                 jump: function(page){
-                    jump(page,vue); //¶¨ÒåÔÚadminHeader.html ÖĞ
+                    jump(page,vue); //å®šä¹‰åœ¨adminHeader.html ä¸­
                 },
                 jumpByNumber: function(start){
                     jumpByNumber(start,vue);
                 }
             }
- 
+
         });
     });
- 
+
 </script>
- 
+
 <div id="workingArea" >
     <ol class="breadcrumb">
-        <li><a href="admin_category_list">ËùÓĞ·ÖÀà</a></li>
+        <li><a href="admin_category_list">æ‰€æœ‰åˆ†ç±»</a></li>
         <li><a :href="'admin_property_list?cid='+category.id">{{category.name}}</a></li>
-        <li class="active">ÊôĞÔ¹ÜÀí</li>
+        <li class="active">å±æ€§ç®¡ç†</li>
     </ol>
- 
+
     <div class="listDataTableDiv">
         <table class="table table-striped table-bordered table-hover  table-condensed">
             <thead>
             <tr class="success">
                 <th>ID</th>
-                <th>ÊôĞÔÃû³Æ</th>
-                <th>±à¼­</th>
-                <th>É¾³ı</th>
+                <th>å±æ€§åç§°</th>
+                <th>ç¼–è¾‘</th>
+                <th>åˆ é™¤</th>
             </tr>
             </thead>
             <tbody>
@@ -104,27 +108,27 @@
             </tbody>
         </table>
     </div>
- 
+
     <div th:replace="include/admin/adminPage::html" ></div>
- 
+
     <div class="panel panel-warning addDiv">
-        <div class="panel-heading">ĞÂÔöÊôĞÔ</div>
+        <div class="panel-heading">æ–°å¢å±æ€§</div>
         <div class="panel-body">
             <table class="addTable">
                 <tr>
-                    <td>ÊôĞÔÃû³Æ</td>
+                    <td>å±æ€§åç§°</td>
                     <td><input  @keyup.enter="add"  v-model.trim="bean.name" type="text" class="form-control"></td>
                 </tr>
                 <tr class="submitTR">
                     <td colspan="2" align="center">
-                        <a href="#nowhere"  @click="add" class="btn btn-success">Ìá½»</a>
+                        <a href="#nowhere"  @click="add" class="btn btn-success">æäº¤</a>
                     </td>
                 </tr>
             </table>
         </div>
     </div>
 </div>
- 
+
 <div th:replace="include/admin/adminFooter::html" ></div>
 </body>
 </html>

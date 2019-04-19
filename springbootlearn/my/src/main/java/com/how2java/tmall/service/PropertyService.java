@@ -49,6 +49,10 @@ public class PropertyService {
          
         return new Page4Navigator<>(pageFromJPA,navigatePages);
          
-    }  
+    }
+ 
+    public List<Property> listByCategory(Category category){
+        return propertyDAO.findByCategory(category);
+    }
  
 }
