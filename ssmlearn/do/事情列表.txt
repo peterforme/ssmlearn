@@ -5,5 +5,4 @@
 心得：
 添加分页只需要自动生成实体类和mapper后，修改controller就可以了
 
-要做的事情:
-1 进行登录拦截
+jsp中想要获取URL里面带的参数的内容,例如get请求带有一个total参数，直接${param.total}就可以了
