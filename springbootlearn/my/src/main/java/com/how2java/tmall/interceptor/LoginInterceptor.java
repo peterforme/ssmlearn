@@ -46,10 +46,10 @@ public class LoginInterceptor implements HandlerInterceptor {
  
         uri = StringUtils.remove(uri, contextPath+"/");
         String page = uri;
-         
+ 
         if(begingWith(page, requireAuthPages)){
-            User user = (User) session.getAttribute("user");
-            if(user==null) {
+            Subject subject = SecurityUtils.getSubject();
+            if(!subject.isAuthenticated()) {
                 httpServletResponse.sendRedirect("login");
                 return false;
             }
