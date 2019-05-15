@@ -1,16 +1,12 @@
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
 spring:
   application:
-    name: product-view-service-feign
-  zipkin:
-    base-url: http://localhost:9411
+    name:  product-view-service-feign
   thymeleaf:
     cache: false
     prefix: classpath:/templates/
     suffix: .html
     encoding: UTF-8
     content-type: text/html
-    mode: HTML5   
+    mode: HTML5       
+  zipkin:
+    base-url: http://localhost:9411   
